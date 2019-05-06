@@ -34,3 +34,7 @@
 #Custom folders
 
 *.DS_Store
+
+#xcodeproj
+*.xcodeproj/
+DerivedData/
