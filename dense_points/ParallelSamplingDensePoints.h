@@ -43,4 +43,22 @@ class ParallelSamplingDensePoints {
     
 public:
     
+    void checkStatus(Sampple *p){
+        
+        if (p->status != "active") {//atomcic
+            return NULL;
+        }
+        for (Sample &a : p->A) {
+            if (a.priority > p->priority) {
+                checkStatus(a);
+                if (a.status == "accepted") {
+                    p->status = "rejected";
+                    return NULL;
+                }
+            }
+        }
+        p.status = accepted;
+        return NULL;
+    };
+    
 };
