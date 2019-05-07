@@ -43,4 +43,9 @@ class ParallelSamplingDensePoints {
     
 public:
     
+    void checkStatus()//pi as argument
+    {
+        
+    }
+    
 };
