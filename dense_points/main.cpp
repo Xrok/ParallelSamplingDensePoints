@@ -13,7 +13,7 @@ int main(int argc, const char * argv[]) {
     // insert code here...
     srand(time(NULL));
     
-    std::cout << "Hello, World!\n";
+    //std::cout << "Hello, World!\n";
     
     ParallelSamplingDensePoints PSDP;
     
