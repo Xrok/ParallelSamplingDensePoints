@@ -27,9 +27,10 @@ int fils = HEIGHT/size_;
 
 vector<Sample*> cloud(L); //dense points cloud
 vector<int> pointIndex(L);
-vector<vector<Sample*>> actives;//
-vector<vector<Sample*>> idles;  //
+//vector<vector<Sample*>> actives;//
+//vector<vector<Sample*>> idles;  //
 vector<list<Sample*>> grid(cols*fils);   //inicializar el grid !!! esta sera la respuesta
+
 
 void parallel_generateDP(int ini, int fin) {
     for (int i = ini; i < fin; ++i) {
