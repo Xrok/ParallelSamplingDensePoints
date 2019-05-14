@@ -89,8 +89,8 @@ public:
 
     void detectCollision(Sample *p, int r)
     {
-        int col = ((p->pos[0]) / size);
-        int row = ((p->pos[1]) / size);
+        int col = ((p->pos[0]) / size_);
+        int row = ((p->pos[1]) / size_);
 
         for (int i = -1; i <= 1; i++)
         {
