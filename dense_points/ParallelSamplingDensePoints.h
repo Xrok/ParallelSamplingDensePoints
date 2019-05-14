@@ -7,6 +7,7 @@
 #include <list>
 #include <math.h>
 #include <iostream>
+#include <mutex>
 #include "sample.h"
 
 #define N_THREADS 2
@@ -86,48 +87,44 @@ public:
         }
     }
 
-    std::pair<std::vector<Sample>, std::vector<Sample>> detectCollision(Sample *p, int r)
+    void detectCollision(Sample *p, int r)
     {
-        int col = p.pos[0] / block_size;
-        int row = p.pos[1] / block_size;
+        int col = ((p->pos[0]) / size);
+        int row = ((p->pos[1]) / size);
 
         for (int i = -1; i <= 1; i++)
         {
             for (int j = -1; j <= 1; j++)
             {
                 int position = (col + i) + (row + j) * cols;
-                if (position >= 0 && position < cols * rows)
+                if (position >= 0 && position < cols * fils)
                 {
                     std::list<Sample *> neighbour = grid[position];
                     for (auto &sample : neighbour)
                     {
-                        switch (sample->status)
+                        if (sample->status == "IDLE")
                         {
-                        case "IDLE":
-                            p->I.push_back(sample) break;
-                        case "ACTIVE":
+                            p->I.push_back(sample);
+                        }
+                        else if (sample->status == "ACTIVE")
+                        {
                             p->A.push_back(sample);
-                            break;
-                        default:
-                            break;
                         }
                     }
                 }
             }
         }
-        for (auto &samples : grid[(col + i) + (row + j) * cols])
+        for (auto &samples : grid[col + row * fils])
         {
-            if (sample->pos[0] != p->pos[0] && sample->pos[1] != p->pos[1])
+            if (samples->pos[0] != p->pos[0] && samples->pos[1] != p->pos[1])
             {
-                switch (sample->status)
+                if (samples->status == "IDLE")
                 {
-                case "IDLE":
-                    p->I.push_back(sample) break;
-                case "ACTIVE":
-                    p->A.push_back(sample);
-                    break;
-                default:
-                    break;
+                    p->I.push_back(samples);
+                }
+                else if (samples->status == "ACTIVE")
+                {
+                    p->A.push_back(samples);
                 }
             }
         }
