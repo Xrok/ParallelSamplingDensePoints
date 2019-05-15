@@ -11,7 +11,7 @@
 
 int main(int argc, const char * argv[]) {
     // insert code here...
-    srand(time(NULL));
+    srand((unsigned int)time(NULL));
     
     //std::cout << "Hello, World!\n";
     
