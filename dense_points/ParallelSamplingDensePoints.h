@@ -166,6 +166,32 @@ public:
         }
     }
 
+    void checkStatus(Sample *pi)//pi as argument
+    {
+        mutex_.lock();
+        if(pi->status != "ACTIVE"){//atomic
+            mutex_.unlock();
+            return ;
+        }
+        mutex_.unlock();
+        for (auto &q :pi->A) {
+            if(q->prioridad > pi->prioridad){
+                checkStatus(q);
+                mutex_.lock();
+                if (q->status=="ACCEPTED"){//atomic
+                    pi->status= "REJECTED";
+                    mutex_.unlock();
+                    return;
+                }
+                mutex_.unlock();
+            }
+        }
+        mutex_.lock();
+        pi->status="ACCEPTED";//atomic
+        mutex_.unlock();
+        return;
+    }
+
 
     void run()
     {
